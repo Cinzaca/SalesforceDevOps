@@ -1,9 +1,5 @@
 /**
- * @description       : 
- * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
- * @group             : 
- * @last modified on  : 01-13-2025
- * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+Am modificat aceasta linie de cod pentru a exemplifica modul de comunicarea branch-urilor
 **/
 public with sharing class AccountController {
     @AuraEnabled(cacheable=true)
