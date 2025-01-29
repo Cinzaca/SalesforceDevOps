@@ -1,6 +1,4 @@
 /**
-Am modificat aceasta linie de cod pentru a exemplifica modul de comunicarea branch-urilor
-Si asta
 **/
 public with sharing class AccountController {
     @AuraEnabled(cacheable=true)

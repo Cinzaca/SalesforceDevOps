@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Detectează branch-ul curent
+current_branch=$(git rev-parse --abbrev-ref HEAD)
+
+# Permite commit doar în DEV-1
+if [[ "$current_branch" != "DEV-1" ]]; then
+    echo "❌ Commit-urile sunt permise doar în branch-ul DEV-1!"
+    exit 1
+fi
+
+exit 0
