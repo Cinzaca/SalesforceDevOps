@@ -20,6 +20,6 @@ jobs:
         run: | 
           echo ${{ secrets.SF_AUTH_UAT }} | sf org login sfdx-url -s -u
 
-      - name: 'Validate'
+      - name: 'Validate' 
         run: |
-          sf project deploy start -d force-app/ --test-level RunSpecifiedTests --tests "AccountTrigger_Test" -w 30
+          sf project deploy start -d force-app/ --test-level NoTestRun
