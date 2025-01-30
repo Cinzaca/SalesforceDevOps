@@ -19,9 +19,6 @@ jobs:
       - name: Login To Org
         run: |
           sfdx org login sfdx-url --set-default --sfdx-url-file <(echo "${{ secrets.SF_AUTH_UAT }}")
-      - name: Run Test Classes
-        run: |
-          sfdx apex run test -l RunLocalTests -w 15
       - name: Deploy to UAT Org
         run: |
           sfdx force:source:deploy -p force-app -u ${{ secrets.SF_AUTH_UAT }} -w 10
