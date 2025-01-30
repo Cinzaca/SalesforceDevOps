@@ -18,10 +18,8 @@ jobs:
 
       - name: Authenticate with UAT Org
         run: |
-          echo "${{ secrets.SF_AUTH_UAT }}" | base64 --decode > authUAT.json
-          cat authUAT.json  # Opțional, pentru debug, vezi dacă fișierul are conținut
-          sfdx auth:sfdxurl:store -f authUAT.json -s -a UAT
-
+          sfdx org login sfdx-url --set-default --sfdx-url-file <(echo "${{ secrets.SF_AUTH_UAT }}")
+          
       - name: Deploy to UAT
         run: sfdx force:source:deploy -u UAT --manifest manifest/package.xml  # Deployează pachetul în UAT
 
