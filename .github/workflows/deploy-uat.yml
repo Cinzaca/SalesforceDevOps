@@ -22,4 +22,4 @@ jobs:
 
       - name: 'Validate'
         run: |
-          --test-level RunSpecifiedTests --test-level RunSpecifiedTests --tests "AccountTrigger_Test" -w 30
+          --test-level RunSpecifiedTests --test-level RunSpecifiedTests -t AccountTrigger_Test -w 30
