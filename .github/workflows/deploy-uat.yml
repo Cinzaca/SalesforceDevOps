@@ -1,0 +1,26 @@
+name: Deploy to UAT
+
+on:
+  push:
+    branches:
+      - UAT  # Rulează workflow-ul când cineva face push în UAT
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # Rulează pe un mediu Linux
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4  # Ia codul sursă din repo
+
+      - name: Install Salesforce CLI
+        run: npm install -g sfdx-cli  # Instalează Salesforce CLI
+
+      - name: Authenticate with UAT Org
+        run: echo ${{ secrets.SF_AUTH_UAT }} | base64 --decode > authUAT.json && sfdx auth:sfdxurl:store -f authUAT.json -s -a UAT
+
+      - name: Deploy to UAT
+        run: sfdx force:source:deploy -u UAT --manifest manifest/package.xml  # Deployează pachetul în UAT
+
+      - name: Run Apex Tests
+        run: sfdx force:apex:test:run -u UAT --resultformat human --codecoverage --wait 10  # Rulează testele Apex
