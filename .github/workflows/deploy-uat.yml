@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - force-app/**
+  workflow_dispatch:  # 👈 Adăugat pentru a permite rularea manuală
 
 jobs:
   validate-deployment:
