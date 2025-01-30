@@ -23,5 +23,5 @@ jobs:
         run: |
           sfdx apex run test -l RunLocalTests -w 15
       - name: Deploy to UAT Org
-          run: |
-            sfdx force:source:deploy -p force-app -u ${{ secrets.SF_AUTH_UAT }} -w 10
+        run: |
+          sfdx force:source:deploy -p force-app -u ${{ secrets.SF_AUTH_UAT }} -w 10
