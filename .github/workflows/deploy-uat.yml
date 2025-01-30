@@ -22,4 +22,4 @@ jobs:
 
       - name: 'Validate'
         run: |
-          sf project deploy validate -d force-app/ -l NoTestRun -w 30
+          --test-level RunSpecifiedTests --tests AccountTrigger_Test -w 30
