@@ -18,7 +18,10 @@ jobs:
           sfdx --version
       - name: Login To Org
         run: |
-          sfdx org login sfdx-url --set-default --sfdx-url-file <(echo "${{ secrets.SF_AUTH_UAT }}")
+          sfdx auth:login --set-default --sfdx-url-file <(echo "${{ secrets.SF_AUTH_UAT }}")
+      - name: Verify Authentication
+        run: |
+          sfdx auth:list
       - name: Deploy to UAT Org
         run: |
           sfdx force:source:deploy -p force-app -u ${{ secrets.SF_AUTH_UAT }} -w 10
