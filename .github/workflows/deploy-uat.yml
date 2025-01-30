@@ -6,7 +6,7 @@ on:
       - force-app/**
 
 jobs:
-  run-test-classes:
+  run-test-classes-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -22,18 +22,6 @@ jobs:
       - name: Run Test Classes
         run: |
           sfdx apex run test -l RunLocalTests -w 15
-  deploy:
-      runs-on: ubuntu-latest
-      needs: run-test-classes
-      steps:
-        - uses: actions/checkout@v3
-        - name: Install SFDX
-          run: |
-            npm install --global sfdx-cli
-            sfdx --version
-        - name: Login To Org
-          run: |
-            sfdx org login sfdx-url --set-default --sfdx-url-file <(echo "${{ secrets.SF_AUTH_UAT }}")
-        - name: Deploy to UAT Org
+      - name: Deploy to UAT Org
           run: |
             sfdx force:source:deploy -p force-app -u ${{ secrets.SF_AUTH_UAT }} -w 10
