@@ -6,22 +6,20 @@ on:
       - force-app/**
 
 jobs:
-  run-test-classes-and-deploy:
+  validate-deployment:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
+    container:
+      image: salesforce/cli:latest-slim
+    steps:      
+      - name: 'Checkout source code'
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Install SFDX
+      
+      - name: 'Authenticate using SFDX_AUTH_URL'
+        run: | 
+          echo ${{ secrets.SFDX_AUTH_URL }} | sf org login sfdx-url -s -u
+
+      - name: 'Validate'
         run: |
-          npm install --global sfdx-cli
-          sfdx --version
-      - name: Login To Org
-        run: |
-          sfdx auth:login --set-default --sfdx-url-file <(echo "${{ secrets.SF_AUTH_UAT }}")
-      - name: Verify Authentication
-        run: |
-          sfdx auth:list
-      - name: Deploy to UAT Org
-        run: |
-          sfdx force:source:deploy -p force-app -u ${{ secrets.SF_AUTH_UAT }} -w 10
+          sf project deploy validate -d force-app/ -l RunLocalTests -w 30
