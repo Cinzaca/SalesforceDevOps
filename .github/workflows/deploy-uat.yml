@@ -16,9 +16,9 @@ jobs:
         with:
           fetch-depth: 0
       
-      - name: 'Authenticate using SFDX_AUTH_URL'
+      - name: 'Authenticate using SF_AUTH_UAT'
         run: | 
-          echo ${{ secrets.SFDX_AUTH_URL }} | sf org login sfdx-url -s -u
+          echo ${{ secrets.SF_AUTH_UAT }} | sf org login sfdx-url -s -u
 
       - name: 'Validate'
         run: |
