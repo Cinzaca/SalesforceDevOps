@@ -22,7 +22,6 @@ jobs:
           cat authUAT.json  # Opțional, pentru debug, vezi dacă fișierul are conținut
           sfdx auth:sfdxurl:store -f authUAT.json -s -a UAT
 
-
       - name: Deploy to UAT
         run: sfdx force:source:deploy -u UAT --manifest manifest/package.xml  # Deployează pachetul în UAT
 
