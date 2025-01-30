@@ -1,27 +1,24 @@
-name: Deploy to UAT
+name: Run Test Classes
 
 on:
   push:
-    branches:
-      - UAT  # Rulează workflow-ul când cineva face push în UAT
+    paths:
+      - force-app/**
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest  # Rulează pe un mediu Linux
-
+  run-test-classes:
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4  # Ia codul sursă din repo
-
-      - name: Install Salesforce CLI
-        run: npm install -g sfdx-cli  # Instalează Salesforce CLI
-
-      - name: Authenticate with UAT Org
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Install SFDX
+        run: |
+          npm install --global sfdx-cli
+          sfdx --version
+      - name: Login To Org
         run: |
           sfdx org login sfdx-url --set-default --sfdx-url-file <(echo "${{ secrets.SF_AUTH_UAT }}")
-          
-      - name: Deploy to UAT
-        run: sfdx force:source:deploy -u UAT --manifest manifest/package.xml  # Deployează pachetul în UAT
-
-      - name: Run Apex Tests
-        run: sfdx force:apex:test:run -u UAT --resultformat human --codecoverage --wait 10  # Rulează testele Apex
+      - name: Run Test Classes
+        run: |
+          sfdx apex run test -l RunLocalTests -w 15
