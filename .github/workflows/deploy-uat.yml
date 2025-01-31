@@ -1,4 +1,4 @@
-name: Run Test Classes
+name: Testing&Deploy after PUSH into force-app
 
 on:
   push:
